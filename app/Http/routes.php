@@ -1,5 +1,4 @@
 <?php
-
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -10,9 +9,21 @@
 | and give it the controller to call when that URI is requested.
 |
 */
-
+function arrayChange($status,$msg,$data=array()){
+    return ['status'=>$status,'msg'=>$msg,'data'=>$data];
+}
+function rq($key=null,$default=null){
+    if(!$key){
+        return Request::all();
+    }
+    return Request::get($key,$default);
+}
 function userins(){
     return new App\User;
+}
+
+function question_ins(){
+    return new App\Question;
 }
 
 Route::get('/', function () {
@@ -33,6 +44,22 @@ Route::any('api/login',function(){
 
 Route::any('api/logout',function(){
     return userins()->logout();
+});
+
+Route::any('api/question/add',function(){
+    return question_ins()->add();
+});
+
+Route::any('api/question/change',function(){
+    return question_ins()->change();
+});
+
+Route::any('api/question/read',function(){
+    return question_ins()->read();
+});
+
+Route::any('api/question/remove',function(){
+    return question_ins()->remove();
 });
 
 Route::any('test',function(){
