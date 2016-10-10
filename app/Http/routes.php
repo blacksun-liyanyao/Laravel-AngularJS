@@ -18,6 +18,12 @@ function rq($key=null,$default=null){
     }
     return Request::get($key,$default);
 }
+function comment_ins(){
+    return new App\comment;
+}
+function answer_ins(){
+    return new App\Answer;
+}
 function userins(){
     return new App\User;
 }
@@ -60,6 +66,22 @@ Route::any('api/question/read',function(){
 
 Route::any('api/question/remove',function(){
     return question_ins()->remove();
+});
+
+Route::any('api/answer/add',function(){
+    return answer_ins()->add();
+});
+
+Route::any('api/answer/change',function(){
+    return answer_ins()->change();
+});
+
+Route::any('api/answer/read',function(){
+    return answer_ins()->read();
+});
+
+Route::any('api/comment/add',function(){
+    return comment_ins()->add();
 });
 
 Route::any('test',function(){
