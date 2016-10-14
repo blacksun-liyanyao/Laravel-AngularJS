@@ -9,6 +9,11 @@
 | and give it the controller to call when that URI is requested.
 |
 */
+function paginate($page=1){
+    $limit = rq('limit')?:16;
+    $skip = (($page?:1) -1) * $limit;
+    return [$limit,$skip];
+}
 function arrayChange($status,$msg,$data=array()){
     return ['status'=>$status,'msg'=>$msg,'data'=>$data];
 }
@@ -33,11 +38,15 @@ function question_ins(){
 }
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('index');
 });
 
 Route::any('api',function(){
    return ['version' => 0.1];
+});
+
+Route::any('api/user/read',function(){
+    return userins()->read();
 });
 
 Route::any('api/signup',function(){
@@ -50,6 +59,22 @@ Route::any('api/login',function(){
 
 Route::any('api/logout',function(){
     return userins()->logout();
+});
+
+Route::any('api/user/change_password',function(){
+    return userins()->change_password();
+});
+
+Route::any('api/user/reset_password',function(){
+    return userins()->reset_password();
+});
+
+Route::any('api/user/validate_reset_password',function(){
+    return userins()->validate_reset_password();
+});
+
+Route::any('api/answer/vote',function(){
+    return answer_ins()->vote();
 });
 
 Route::any('api/question/add',function(){
@@ -83,6 +108,16 @@ Route::any('api/answer/read',function(){
 Route::any('api/comment/add',function(){
     return comment_ins()->add();
 });
+
+Route::any('api/comment/read',function(){
+    return comment_ins()->read();
+});
+
+Route::any('api/comment/remove',function(){
+    return comment_ins()->remove();
+});
+
+Route::any('api/timeline','CommonController@timeline');
 
 Route::any('test',function(){
     dd(userins()->is_logged_in());

@@ -57,9 +57,7 @@ class Question extends Model
         if(rq('id')){
             return arrayChange(1,'查询成功',$this->find(rq('id')));
         }
-        $limit = rq('limit')?:15;
-        $skip = ((rq('page')?:1) -1) * $limit;
-
+        list($limit,$skip) = paginate(rq('page'));
         $r =  $this
             ->orderBy('created_at')
             ->limit($limit)

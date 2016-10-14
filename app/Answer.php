@@ -76,4 +76,34 @@ class Answer extends Model
             ->keyBy('id');
         return arrayChange(1,'',$answers);
     }
+
+    public function vote(){
+        if(!userins()->is_logged_in()){
+            return arrayChange(0,'login required');
+        }
+        if(!rq('id') || !rq('vote')){
+            return arrayChange(0,'id and vote are required');
+        }
+        $answer = $this->find(rq('id'));
+        if(!$answer){
+            return arrayChange(0,'answer not exits');
+        }
+        /*1赞同，2反对*/
+        $vote = rq('vote') <= 1 ?1:2;
+        $answer->users()
+                ->newPivotStatement()
+                ->where('user_id',session('user_id'))
+                ->where('answer_id',rq('id'))
+                ->delete();
+        $answer->users()->attach(session('user_id'),['vote'=>$vote]);
+
+        return arrayChange(1,'');
+    }
+
+    public function users(){
+        return $this
+            ->belongsToMany('App\User')
+            ->withPivot('vote')
+            ->withTimestamps();
+    }
 }
