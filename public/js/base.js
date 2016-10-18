@@ -17,6 +17,16 @@
                     url: '/login',
                     templateUrl: 'login.tpl'
                 });
+            $stateProvider
+                .state('home', {
+                    url: '/home',
+                    templateUrl: 'home.tpl'
+                });
+            $stateProvider
+                .state('signup', {
+                    url: '/signup',
+                    templateUrl: 'signup.tpl'
+                });
 
     });
 
