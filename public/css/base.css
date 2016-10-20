@@ -1,5 +1,19 @@
 *{
-    background-color: rgba(0,0,0,0.05);
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+body{
+    background: #eeeeee;
+}
+a{
+    text-decoration: none;
+}
+
+
+h1{
+    font-size: 20px;
+    margin-top: 0;
 }
 .clearfix:after,
 .clearfix:before{
@@ -14,7 +28,12 @@
     float: right;
 }
 .navbar{
-    /*background-color: rgba(0,0,0,0.1);*/
+    background-color: #a10;
+    color: white;
+}
+.navbar a{
+    font-weight: 500;
+    color: #ffffff;
 }
 .navbar-item{
     line-height: 2;
@@ -34,10 +53,55 @@
     font-weight: 600;
 }
 .container{
-    width: 600px;
+    width: 800px;
     margin-left: auto;
     margin-right: auto;
 }
+.container.signup,
+.container.login,
+.container.reset-password{
+    width: 600px;
+    margin-top: 15px;
+}
 [ui-sref]{
     cursor: pointer;
+}
+
+form,label{
+    display: block;
+}
+label{
+    margin: 4px 0;
+}
+.input-error-set{
+    color: #a10;
+    margin:4px 0;
+}
+.card{
+    display: block;
+    padding: 10px 6px;
+    border-radius: 4px;
+    background: #ffffff;
+    box-shadow: 0 1px 2px 1px rgba(0,0,0,0.2);
+}
+
+input{
+    width: 98%;
+    padding: 5px;
+    border: 1px solid rgba(0,0,0,0.1);
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    outline: none;
+}
+.input-group{
+    margin-bottom: 10px;
+}
+button{
+    border: 1px solid rgba(0,0,0,0.1);
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    background-color: #fff;
+    padding: 5px;
 }

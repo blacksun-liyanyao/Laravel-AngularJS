@@ -191,4 +191,7 @@ class User extends Model
             ->withPivot('vote')
             ->withTimestamps();
     }
+    public function exists(){
+        return arrayChange(1,'',['count'=>$this->where('username',rq('username'))->count()]);
+    }
 }

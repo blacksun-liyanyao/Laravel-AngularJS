@@ -45,6 +45,10 @@ Route::any('api',function(){
    return ['version' => 0.1];
 });
 
+Route::any('api/user/exists',function(){
+    return userins()->exists();
+});
+
 Route::any('api/user/read',function(){
     return userins()->read();
 });
