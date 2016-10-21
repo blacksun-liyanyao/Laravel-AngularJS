@@ -15,9 +15,14 @@
     <div class="container">
         <div class="fl">
             <div class="navbar-item brand">blacksun</div>
-            <div class="navbar-item">
-                <input type="text">
-            </div>
+            <form ng-submit="Question.go_add_question()" id="quick_ask" ng-controller="QuestionAddController">
+                <div class="navbar-item">
+                    <input ng-model="Question.new_question.title" type="text">
+                </div>
+                <div class="navbar-item">
+                    <button type="submit" class="primary">提交</button>
+                </div>
+            </form>
         </div>
         <div class="fr">
             <a ui-sref="home" class="navbar-item">首页</a>
@@ -39,17 +44,37 @@
     </div>
 </script>
 <script type="text/ng-template" id="login.tpl">
-    <div class="login container">
-        登录
-        aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-        aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+    <div ng-controller="LoginController" class="login container">
+        <div class="card">
+            <h1>登录</h1>
+            <form name="login_form" ng-submit="User.login()">
+                <div class="input-group">
+                    <label>用户名:</label>
+                    <input name="username" type="text" ng-model="User.login_data.username"
+                            required>
+                </div>
+                <div class="input-group">
+                    <label>密码:</label>
+                    <input name="password" type="password" ng-model="User.login_data.password"
+                           required>
+                </div>
+                <div ng-if="User.login_failed" class="input-error-set">
+                    用户名或密码有误
+                </div>
+                <div class="input-group">
+                    <button class="primary" type="submit"
+                            ng-disabled="login_form.username.$error.required ||
+                            login_form.password.$error.required">登录</button>
+                </div>
+            </form>
+        </div>
     </div>
 </script>
 <script type="text/ng-template" id="signup.tpl">
     <div ng-controller="SignupController" class="signup container">
         <div class="card">
             <h1>注册</h1>
-            [: User.signup_data :]
+            {{--[: User.signup_data :]--}}
             <form name="signup_form" ng-submit="User.signup()">
                 <div class="input-group">
                     <label>用户名:</label>
@@ -74,7 +99,7 @@
                         signup_form.password.$error.maxlength">密码长度必须在6-255位之间</div>
                     </div>
                 </div>
-                <button ng-disabled="signup_form.$invalid" type="submit">注册</button>
+                <button class="primary" ng-disabled="signup_form.$invalid" type="submit">注册</button>
             </form>
         </div>
     </div>

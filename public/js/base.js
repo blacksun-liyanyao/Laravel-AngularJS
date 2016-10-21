@@ -40,6 +40,7 @@
             function ($state,$http) {
             var me = this;
             me.signup_data = {};
+            me.login_data = {};
             me.signup = function () {
                 $http.post('/public/api/signup',
                     {username:me.signup_data.username,
@@ -51,6 +52,19 @@
                         }
                     }, function (e) {
                         console.log(e);
+                    })
+            }
+            me.login = function () {
+                $http.post('/public/api/login',me.login_data)
+                    .then(function (r) {
+                        if(r.data.status){
+                            location.href = '/public';
+                        }
+                        else{
+                            me.login_failed = true;
+                        }
+                    }, function (e) {
+
                     })
             }
 
@@ -84,5 +98,33 @@
                 }
             },true);
         }])
+    
+        .controller('LoginController',[
+            '$scope',
+            'UserService',
+            function ($scope,UserService) {
+                $scope.User = UserService;
+        }])
+
+        .service('QuestionService',[
+            '$state',
+            '$http',
+            function ($state,$http) {
+                var me = this;
+                me.go_add_question = function () {
+                    $state.go('question.add');
+                }
+                    
+                
+            }
+        ])
+
+        .controller('QuestionAddController',[
+            '$scope',
+            'QuestionService',
+            function ($scope,QuestionService) {
+                $scope.Question = QuestionService;
+            }
+        ])
 
 })();
