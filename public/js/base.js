@@ -19,16 +19,23 @@
                 .state('login', {
                     url: '/login',
                     templateUrl: 'login.tpl'
-                });
-            $stateProvider
+                })
                 .state('home', {
                     url: '/home',
                     templateUrl: 'home.tpl'
-                });
-            $stateProvider
+                })
                 .state('signup', {
                     url: '/signup',
                     templateUrl: 'signup.tpl'
+                })
+                .state('question', {
+                    abstract:true,
+                    url: '/question',
+                    template: '<div ui-view></div>'
+                })
+                .state('question.add', {
+                    url: '/add',
+                    templateUrl: 'question.add.tpl'
                 });
 
         }])
@@ -111,11 +118,25 @@
             '$http',
             function ($state,$http) {
                 var me = this;
+                me.new_question = {};
                 me.go_add_question = function () {
                     $state.go('question.add');
                 }
-                    
-                
+                me.add = function () {
+                    if(!me.new_question.title){
+                        return;
+                    }
+                    $http.post('/public/api/question/add',me.new_question)
+                        .then(function (r) {
+                            if(r.data.status){
+                                me.new_question = {};
+                                $state.go('home');
+                            }
+                        }, function (e) {
+                            console.log('e',e);
+                        })
+                }
+
             }
         ])
 

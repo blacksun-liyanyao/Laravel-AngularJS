@@ -26,8 +26,13 @@
         </div>
         <div class="fr">
             <a ui-sref="home" class="navbar-item">首页</a>
-            <a ui-sref="login" class="navbar-item">登录</a>
-            <a ui-sref="signup" class="navbar-item">注册</a>
+            @if(is_logged_in())
+                <a ui-sref="login" class="navbar-item">{{session('username')}}</a>
+                <a href="{{url('/api/logout')}}" class="navbar-item">登出</a>
+            @else
+                <a ui-sref="login" class="navbar-item">登录</a>
+                <a ui-sref="signup" class="navbar-item">注册</a>
+            @endif
         </div>
     </div>
 </div>
@@ -37,10 +42,60 @@
 
 </body>
 <script type="text/ng-template" id="home.tpl">
-    <div class="home container">
-        首页
-        aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-        aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+    <div class="home card container">
+        <h1>最新动态</h1>
+        <div class="hr"></div>
+        <div class="item-set">
+            <div class="item">
+                <div class="vote"></div>
+                <div class="feed-item-content">
+                    <div class="content-act">王小虎赞同了该回答</div>
+                    <div class="title">为何蒙特利尔有如此多的游戏工作室？</div>
+                    <div class="content-owner">触乐
+                        <span class="desc">高品质、有价值、有趣的移动游戏资讯</span>
+                    </div>
+                    <div class="content-main">
+                        sdafasdfasdfasdfsdaaasdfsdfsdfsdfxcfgvzscfzsd
+                        sdafasdfasdfasdfsdaaasdfsdfsdfsdfxcfgvzscfzsd
+                        sdafasdfasdfasdfsdaaasdfsdfsdfsdfxcfgvzscfzsd
+                        sdafasdfasdfasdfsdaaasdfsdfsdfsdfxcfgvzscfzsd
+                    </div>
+                    <div class="action-set">
+                        <div class="comment">评论</div>
+                    </div>
+                    <div class="comment-block">
+                        <div class="comment-item-set">
+                            <div class="rect"></div>
+                            <div class="comment-item clearfix">
+                                <div class="user">test</div>
+                                <div class="comment-content">
+                                    sdafasdfasdfasdfsdaaasdfsdfsdfsdfxcfgvzscfzsd
+                                    sdafasdfasdfasdfsdaaasdfsdfsdfsdfxcfgvzscfzsd
+                                    sdafasdfasdfasdfsdaaasdfsdfsdfsdfxcfgvzscfzsd
+                                </div>
+                            </div>
+                            <div class="comment-item clearfix">
+                                <div class="user">test</div>
+                                <div class="comment-content">
+                                    sdafasdfasdfasdfsdaaasdfsdfsdfsdfxcfgvzscfzsd
+                                    sdafasdfasdfasdfsdaaasdfsdfsdfsdfxcfgvzscfzsd
+                                    sdafasdfasdfasdfsdaaasdfsdfsdfsdfxcfgvzscfzsd
+                                </div>
+                            </div>
+                            <div class="comment-item clearfix">
+                                <div class="user">test</div>
+                                <div class="comment-content">
+                                    sdafasdfasdfasdfsdaaasdfsdfsdfsdfxcfgvzscfzsd
+                                    sdafasdfasdfasdfsdaaasdfsdfsdfsdfxcfgvzscfzsd
+                                    sdafasdfasdfasdfsdaaasdfsdfsdfsdfxcfgvzscfzsd
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="hr"></div>
+            </div>
+        </div>
     </div>
 </script>
 <script type="text/ng-template" id="login.tpl">
@@ -100,6 +155,33 @@
                     </div>
                 </div>
                 <button class="primary" ng-disabled="signup_form.$invalid" type="submit">注册</button>
+            </form>
+        </div>
+    </div>
+</script>
+<script type="text/ng-template" id="question.add.tpl">
+    <div ng-controller="QuestionAddController" class="question-add container">
+        <div class="card">
+            <form name="question_add_form" ng-submit="Question.add()">
+                <div class="input-group">
+                    <label>问题标题</label>
+                    <input type="text"
+                           name="title"
+                           ng-minlength="5"
+                           ng-maxlength="255"
+                           ng-model="Question.new_question.title"
+                            required>
+                </div>
+                <div class="input-group">
+                    <label>问题描述</label>
+                    <textarea type="text"
+                              name="desc"
+                              ng-model="Question.new_question.desc"></textarea>
+                </div>
+                <div class="input-group">
+                    <button ng-disabled="question_add_form.$invalid"
+                            class="primary" type="submit">提交</button>
+                </div>
             </form>
         </div>
     </div>

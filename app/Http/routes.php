@@ -37,6 +37,10 @@ function question_ins(){
     return new App\Question;
 }
 
+function is_logged_in(){
+    return session('user_id')?:false;
+}
+
 Route::get('/', function () {
     return view('index');
 });

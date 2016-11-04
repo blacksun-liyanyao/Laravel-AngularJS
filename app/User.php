@@ -98,7 +98,7 @@ class User extends Model
     }
     /*检测用户是否登录*/
     public function is_logged_in(){
-        return session('user_id')?:false;
+        return is_logged_in();
     }
     /*修改密码api*/
     public function change_password(){
