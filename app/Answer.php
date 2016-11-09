@@ -61,7 +61,10 @@ class Answer extends Model
             return arrayChange(0,'id and question_id are required');
         }
         if(rq('id')){
-            $answer = $this->find(rq('id'));
+            $answer = $this
+                ->with('user')
+                ->with('users')
+                ->find(rq('id'));
             if(!$answer){
                 return arrayChange(0,'answer not exits');
             }
@@ -88,16 +91,27 @@ class Answer extends Model
         if(!$answer){
             return arrayChange(0,'answer not exits');
         }
-        /*1赞同，2反对*/
-        $vote = rq('vote') <= 1 ?1:2;
+        /*1赞同，2反对,3清空*/
+        $vote = rq('vote');
+        if($vote != 1 && $vote !=2 && $vote != 3){
+            return arrayChange(0,'invalid vote');
+        }
         $answer->users()
                 ->newPivotStatement()
                 ->where('user_id',session('user_id'))
                 ->where('answer_id',rq('id'))
                 ->delete();
+
+        if($vote == 3){
+            return arrayChange(1,'');
+        }
         $answer->users()->attach(session('user_id'),['vote'=>$vote]);
 
         return arrayChange(1,'');
+    }
+
+    public function user(){
+        return $this->belongsTo('App\user');
     }
 
     public function users(){

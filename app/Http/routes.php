@@ -130,3 +130,19 @@ Route::any('api/timeline','CommonController@timeline');
 Route::any('test',function(){
     dd(userins()->is_logged_in());
 });
+
+Route::get('tpl/page/home',function(){
+    return view('page.home');
+});
+
+Route::get('tpl/page/login',function(){
+    return view('page.login');
+});
+
+Route::get('tpl/page/signup',function(){
+    return view('page.signup');
+});
+
+Route::get('tpl/page/question_add',function(){
+    return view('page.question_add');
+});

@@ -93,4 +93,7 @@ class Question extends Model
         return arrayChange(0,'删除失败');
     }
 
+    public function user(){
+        return $this->belongsTo('App\user');
+    }
 }
